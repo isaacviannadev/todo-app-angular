@@ -1,0 +1,27 @@
+<div class=" flex items-center justify-center fixed inset-0 w-full h-full bg-slate-700 bg-opacity-75 ">
+  <div class="container flex flex-col w-full md:w-[600px] h-full md:h-fit  md:rounded-lg md:shadow-md  bg-slate-50">
+    <div class="modal-header flex w-full h-20 items-center justify-between border-b  p-4">
+      <h4 class="modal-title text-3xl">{{headTitle}}</h4>
+      <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+        <i class="ph-light ph-x"></i>
+      </button>
+    </div>
+    <div class="modal-body flex flex-1 flex-col w-full p-6 gap-3">
+      <label for="title" class="text-2xl">What you have to-do?</label>
+      <input type="text" id="title" class="border h-16 border-gray-300 p-2 rounded-lg outline-slate-500" [value]="title"
+        (change)="catchValue($event)">
+    </div>
+    <div class="modal-footer flex border-t  h-fit items-center justify-end gap-4 p-4">
+      <button (click)="closeModal()"
+        class="flex items-center gap-3 justify-center bg-red-400 hover:bg-red-300 hover:shadow-sm transition-all w-full h-16 py-2 px-4 rounded-lg text-xl cursor-pointer text-white">
+        Cancel
+        <i class="ph-light ph-trash-simple"></i>
+      </button>
+      <button (click)="handleAction()"
+        class="flex items-center gap-3 justify-center bg-lime-600 hover:bg-lime-500 hover:shadow-sm transition-all w-full h-16 py-2 px-4 rounded-lg text-xl cursor-pointer text-white">
+        {{actionText}}
+        <i class="ph-light ph-check"></i>
+      </button>
+    </div>
+  </div>
+</div>
