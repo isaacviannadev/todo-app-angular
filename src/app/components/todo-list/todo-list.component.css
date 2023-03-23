@@ -1,0 +1,9 @@
+i {
+  font-size: 1.2em;
+}
+
+input[type="checkbox"] {
+  width: 1.2em;
+  height: 1.2em;
+  accent-color: #668382;
+}
