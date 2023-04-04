@@ -12,11 +12,17 @@ export interface Todo {
 export class TodosService {
   todoList: Todo[] = [];
   title: string = '';
+  count: number = 1;
+  callback?: () => void;
 
   public catchTitle = (title: any) => {
     this.title = title;
 
     return this.title;
+  };
+
+  public setCallback = (callback: () => void) => {
+    this.callback = callback;
   };
 
   public setToStorage = () => {
@@ -27,11 +33,12 @@ export class TodosService {
     if (!this.title) return;
 
     this.todoList.push({
-      id: this.todoList.length + 1,
+      id: this.count++,
       title: this.title,
       completed: false,
     });
 
+    if (this.callback) this.callback();
     this.setToStorage();
 
     this.title = '';
@@ -41,7 +48,7 @@ export class TodosService {
 
   public removeTodo = (id: number) => {
     this.todoList = this.todoList.filter((todo) => todo.id !== id);
-
+    if (this.callback) this.callback();
     this.setToStorage();
     return this.todoList;
   };
@@ -64,22 +71,6 @@ export class TodosService {
 
   public getTodoList = () => {
     return this.todoList;
-  };
-
-  public filterTodoList = (filter: string) => {
-    switch (filter) {
-      case 'all':
-        return this.todoList;
-
-      case 'completed':
-        return this.todoList.filter((todo) => todo.completed);
-
-      case 'active':
-        return this.todoList.filter((todo) => !todo.completed);
-
-      default:
-        return this.todoList;
-    }
   };
 
   constructor() {

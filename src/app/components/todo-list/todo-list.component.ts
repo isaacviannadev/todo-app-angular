@@ -17,11 +17,38 @@ export class TodoListComponent implements OnChanges, OnInit {
 
   ngOnInit(): void {
     this.todoList = this.todoService.getTodoList();
+    this.todoService.setCallback(this.setTodoList);
   }
 
   ngOnChanges(): void {
     this.todoList = this.todoService.getTodoList();
   }
+
+  filterTodoList = (filter: string) => {
+    switch (filter) {
+      case 'all':
+        return this.todoService.getTodoList();
+
+      case 'completed':
+        this.todoList = this.todoService
+          .getTodoList()
+          .filter((todo) => todo.completed);
+        return this.todoList;
+
+      case 'active':
+        this.todoList = this.todoService
+          .getTodoList()
+          .filter((todo) => !todo.completed);
+        return this.todoList;
+
+      default:
+        return this.todoService.getTodoList();
+    }
+  };
+
+  setTodoList = () => {
+    this.todoList = this.filterTodoList(this.filter);
+  };
 
   removeTodo = (id: number) => {
     this.todoService.removeTodo(id);
@@ -35,6 +62,6 @@ export class TodoListComponent implements OnChanges, OnInit {
 
   handleFilter = (filter: 'all' | 'completed' | 'active') => {
     this.filter = filter;
-    this.todoList = this.todoService.filterTodoList(filter);
+    this.todoList = this.filterTodoList(filter);
   };
 }
